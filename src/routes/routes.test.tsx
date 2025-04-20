@@ -1,7 +1,6 @@
-import { act, screen, waitFor } from "@testing-library/react-native"
 import { Routes } from "@routes/index"
 import { saveStorageCity } from "@libs/asyncStorage/cityStorage"
-import { render } from "@__tests__/utils/customRender"
+import { render, act, screen, waitFor } from "@__tests__/utils/customRender"
 import { api } from "@services/api"
 import { mockWeatherAPIResponse } from "@__tests__/mocks/api/mockWeatherAPIResponse"
 
@@ -28,9 +27,9 @@ describe("Routes", () => {
     
     await saveStorageCity(city)
 
-    await act(() => waitFor(() => render(<Routes />)))
+    await waitFor(() => render(<Routes />))
 
-    const title = screen.getByText(city.name)
+    const title = await waitFor(() => screen.getByText(city.name))
 
     expect(title).toBeTruthy()
   })
